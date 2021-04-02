@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>level3</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #outer {
+            width: 900px;
+            height: 600px;
+            margin: 20px auto;
+        }
+
+        #input {
+            width: 200px;
+            height: 40px;
+            margin-left: 10px;
+        }
+
+        #display {
+            width: 900px;
+            height: 500px;
+            padding: 10px 10px;
+            margin-top: 20px;
+            background-color: rgb(0, 255, 179);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        button {
+            width: 80px;
+            height: 35px;
+            background-color: rgb(217, 255, 0);
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+        .divRandom {
+            width: 35px;
+            background-color: pink;
+
+        }
+    </style>
+    <script>
+        function getRandomNum(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+        function bubble() {
+            var i = 0;
+            var j = 0;
+            var divArrs = document.getElementsByClassName("divRandom");
+            var timer = setInterval(function () {
+                if (i < divArrs.length - 1) {
+
+                    if (j < divArrs.length - i -1) {
+                        if (divArrs[j].firstElementChild.innerHTML > divArrs[j + 1].firstElementChild.innerHTML) {
+                            var temp = divArrs[j].firstElementChild.innerHTML;
+                            divArrs[j].style.height = (divArrs[j + 1].firstElementChild.innerHTML) * 10 + "px";
+                            divArrs[j].firstElementChild.innerHTML = divArrs[j + 1].firstElementChild.innerHTML;
+                            divArrs[j + 1].style.height = temp * 10 + "px";
+                            divArrs[j + 1].firstElementChild.innerHTML = temp;
+
+                        }
+                        j++;
+                    }
+                    else{
+                        i++;
+						j = 0;
+                    }
+                }
+                else {
+                    clearInterval(timer);
+                }
+            }, 30);
+        }
+        window.onload = function () {
+            var input = document.getElementById("input");
+            var buttons = document.getElementsByTagName("button");
+            var display = document.getElementById("display");
+
+
+            buttons[6].onclick = function () {
+                display.innerHTML = null;
+                for (var i = 0; i < 20; i++) {
+                    var div = document.createElement("div");
+                    var p = document.createElement("p");
+                    div.appendChild(p);
+                    div.className = "divRandom";
+                    num = getRandomNum(10, 100);
+                    p.innerHTML = num;
+                    div.style.height = num * 10 + "px";
+                    display.appendChild(div);
+                }
+            }
+            buttons[5].onclick = function () {
+                display.innerHTML = null;
+            }
+            buttons[4].onclick = function () {
+                bubble();
+            }
+            buttons[0].onclick = function () {
+                if (input.value < 10 || input.value > 100) {
+                    alert("请输入10-100的数");
+                    return;
+                }
+                else {
+                    var divArrs = document.getElementsByClassName("divRandom");
+                    var number = input.value;
+                    var div = document.createElement("div");
+                    var p = document.createElement("p");
+                    div.appendChild(p);
+                    p.innerHTML = number;
+                    div.style.height = number * 10 + "px";
+                    div.className = "divRandom";
+                    display.insertBefore(div, divArrs[0]);
+                    
+
+                }
+
+            }
+            buttons[2].onclick = function () {
+                var divArrs = document.getElementsByClassName("divRandom");
+                display.removeChild(divArrs[0]);
+            }
+            buttons[1].onclick = function () {
+                if (input.value < 10 || input.value > 100) {
+                    alert("请输入10-100的数");
+                    return;
+                }
+                else {
+                    var divArrs = document.getElementsByClassName("divRandom");
+                    var number = input.value;
+                    var div = document.createElement("div");
+                    var p = document.createElement("p");
+                    div.appendChild(p);
+                    p.innerHTML = number;
+                    div.style.height = number * 10 + "px";
+                    div.className = "divRandom";
+                    display.appendChild(div);
+
+                }
+            }
+            buttons[3].onclick = function () {
+                var divArrs = document.getElementsByClassName("divRandom");
+                display.removeChild(divArrs[divArrs.length - 1]);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="outer">
+        <input type="text" id="input">
+        <button>左侧入</button>
+        <button>右侧入</button>
+        <button>左侧出</button>
+        <button>右侧出</button>
+        <button>重新排序</button>
+        <button>清空</button>
+        <button>随机生成</button>
+        <div id="display">
+
+        </div>
+    </div>
+</body>
+
+</html>
